@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>天气查询</title>
+  </head>
+  <body>
+    <h1 align="center" style="font-size:30px">欢迎来到天气查询系统</h1>
+    <form align="center" action="/user_request" method="GET" style="font-size:20px">
+      请输入想查询天气的城市名称：
+        <input type="text" name="city">
+        <input type="submit" name="query" value="查询">
+        <input type="submit" name="history" value="历史">
+        <input type="submit" name="help" value="帮助">
+    </form>
+    <form style="font-size:15px">
+    {% block content %}
+    {% endblock %}
+    </form>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>城市天气查询系统</title>
+        <link rel="stylesheet" type="text/css" href="static/mystyle.css" />
+    </head>
+    <body>
+      <div id="wrapper">
+        <div id="header">
+        </div>
+        <div id="content">
+          <h1 id="welcome">欢迎来到中国城市天气查询系统</h1>
+          <form  method="POST" action="/">
+              {{ form.csrf_token }}
+              {{ form.city.label }}{{ form.city(class_="textinfo") }}
+              {{ form.query(class_="botton") }}
+              {{ form.history(class_="botton") }}
+              {{ form.help_info(class_="botton") }}
+          </form>
+
+          {% if form.help_info.data %}
+            <p>输入框输入城市名称，如：北京，beijing，四川成都，sichuan chengdu，点击【查询】按钮获取天气信息</p>
+            <p>点击【历史】按钮获取查询历史信息</p>
+            <p>点击【帮助】按钮获取帮助信息</p>
+          {% endif %}
+
+          {% if form.history.data %}
+            {% if history_info|length > 0 %}
+              <p>以下是你的查询记录：</p>
+              <p>
+                {% for history_data in history_info%}
+                  {{ history_data['location'] }}今日天气：白天{{ history_data['text_day'] }}，晚间{{ history_data['text_night'] }}，最高气温{{ history_data['high'] }}℃，最低气温{{ history_data['low'] }}℃，风向：{{ history_data['wind_direction'] }}，运动适宜度：{{ history_data['sport'] }}，紫外线强度：{{ history_data['uv'] }}<br /><br />
+                {% endfor %}
+              </p>
+            {% else %}
+              <p>你还未进行任何查询</p>
+            {% endif %}
+          {% endif %}
+
+          {% if form.query.data %}
+            {% if history_data %}
+              <p>{{ history_data['location'] }}今日天气：</p>
+              <p>白天{{ history_data['text_day'] }}，晚间{{ history_data['text_night'] }}，最高气温{{ history_data['high'] }}℃，最低气温{{ history_data['low'] }}℃，风向：{{ history_data['wind_direction'] }}</p>
+              <p>运动适宜度：{{ history_data['sport'] }}，紫外线强度：{{ history_data['uv'] }}</p>
+              <p>最后更新时间：{{ history_data['last_update'] }}</p>
+            {% else %}
+              {% for message in get_flashed_messages() %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+          {% endif %}
+        </div>
+        <footer id="id_footer">
+          <a href="https://www.seniverse.com/">天气数据由心知天气提供</a>
+        </footer>
+      </div>
+    </body>
+</html>

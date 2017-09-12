@@ -1,0 +1,13 @@
+{% extends "home.html" %}
+{% block content %}
+{% if history_info|length > 0 %}
+	<p align="center" style="font-size:18px">以下是你的查询记录：</p>
+	<p align="center">
+		{% for history_data in history_info%}
+			{{history_data}}<br /><br />
+		{% endfor %}
+	</p>
+{% else %}
+	<p align="center">你还未进行任何查询</p>
+{% endif %}
+{% endblock %}
